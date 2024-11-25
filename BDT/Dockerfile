@@ -23,8 +23,8 @@ RUN which nvcc
 
 # Build and install OpenFHE
 #WORKDIR /usr/src/app/openfhe-development
-RUN mkdir build && cd build && cmake .. \
-#-DWITH_CUDA=ON -DCUDA_PATH=/usr/local/cuda -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc .. 
+RUN mkdir build && cd build && cmake \
+-DWITH_CUDA=ON -DCUDA_PATH=/usr/local/cuda -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc .. \
 && make \
 && make install 
 
