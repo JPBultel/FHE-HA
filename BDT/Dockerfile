@@ -63,11 +63,11 @@ RUN echo "add_executable(bdt_result_prefinal bdt_result_prefinal.cpp)" >> CMakeL
 
 #Build
 WORKDIR /bdt/BDTClient/build
-RUN cmake .. && make
+RUN cmake .. && make && mkdir demoData
 WORKDIR /bdt/BDTServer/build
-RUN cmake .. && make
+RUN cmake .. && make && mkdir demoData
 WORKDIR /bdt/BDTResult/build
-RUN cmake .. && make
+RUN cmake .. && make && mkdir demoData
 
 #WORKDIR /bdt/build
 #RUN cmake .. && make
