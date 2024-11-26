@@ -372,11 +372,15 @@ Ciphertext<DCRTPoly> encrypted_result(CryptoContext<DCRTPoly> cc, bdt_ct tree, b
 //argv[1] is the depth of the trees
 int main(int argc, char * argv[])
 {
-	//getting the depth
-	int depth = atoi(argv[1]);
+   // Set GPU configuration
+   lbcrypto::cudaDataUtils::setGpuBlocks(128);
+   lbcrypto::cudaDataUtils::setGpuThreads(512);
 	
-	//getting the crypto-context and the the public keys
-	CryptoContext<DCRTPoly> cc;
+   //getting the depth
+   int depth = atoi(argv[1]);
+	
+   //getting the crypto-context and the the public keys
+   CryptoContext<DCRTPoly> cc;
     if (!Serial::DeserializeFromFile(DATAFOLDER + "/cryptocontext.txt", cc, SerType::BINARY)) {
         std::cerr << "I cannot read serialization from " << DATAFOLDER + "/cryptocontext.txt" << std::endl;
         return 1;
@@ -412,10 +416,10 @@ int main(int argc, char * argv[])
     bdt_ct encrypted_data = *p_data;
     
     //homomorphic evaluation of the binary decision tree on the client data
-	Ciphertext<DCRTPoly> output_ciphertext = encrypted_result(cc, encrypted_tree, encrypted_data, depth, pk);
+    Ciphertext<DCRTPoly> output_ciphertext = encrypted_result(cc, encrypted_tree, encrypted_data, depth, pk);
 	
-	//serializing the final result
-	if (!Serial::SerializeToFile(DATAFOLDER + "/" + "output_ciphertext.txt", output_ciphertext, SerType::BINARY)) {
+    //serializing the final result
+    if (!Serial::SerializeToFile(DATAFOLDER + "/" + "output_ciphertext.txt", output_ciphertext, SerType::BINARY)) {
         std::cerr << "Error writing serialization of output ciphertext to output_ciphertext.txt" << std::endl;
         return 1;
     }
