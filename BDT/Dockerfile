@@ -22,11 +22,23 @@ RUN git switch gpu-cuda
 RUN which nvcc
 
 # Build and install OpenFHE
-#WORKDIR /usr/src/app/openfhe-development
-RUN mkdir build && cd build && cmake \
--DWITH_CUDA=ON -DCUDA_PATH=/usr/local/cuda -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc .. \
-&& make \
-&& make install 
+#WORKDIR openfhe-uniman
+RUN mkdir build && cd build
+
+RUN cmake 	-DCMAKE_BUILD_TYPE=Debug \
+			-DWITH_OPENMP=OFF \
+			-DWITH_CUDA=ON \
+			-DCMAKE_VERBOSE_MAKEFILE=ON \
+			-DCUDA_PATH=/usr/local/cuda \
+			-DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
+			-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc \
+			-S /usr/src/app/openfhe-uniman \
+            -B /usr/src/app/openfhe-uniman/cmake-build-debug-cuda
+
+RUN cmake 	--build /usr/src/app/openfhe-uniman/cmake-build-debug-cuda \
+			-- -j 32
+
+RUN cmake --install /usr/src/app/openfhe-uniman/cmake-build-debug-cuda
 
 #&& git checkout tags/v1.1.2
 
