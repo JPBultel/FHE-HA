@@ -1,5 +1,5 @@
 # Base image
-FROM nvidia/cuda:12.4.0-devel-ubuntu22.04
+FROM nvidia/cuda:12.2.0-devel-ubuntu20.04
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
