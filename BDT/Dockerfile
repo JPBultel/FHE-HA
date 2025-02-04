@@ -11,11 +11,17 @@ WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y \
     build-essential \
     autoconf \
-    cmake \
     git \
     g++ \
     make \
-    libboost-all-dev
+    libboost-all-dev \
+    wget  # Needed for downloading CMake
+
+# Install CMake 3.27.6
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.27.6/cmake-3.27.6-linux-x86_64.sh \
+    && chmod +x cmake-3.27.6-linux-x86_64.sh \
+    && ./cmake-3.27.6-linux-x86_64.sh --skip-license --prefix=/usr/local \
+    && rm cmake-3.27.6-linux-x86_64.sh
 
 # Clone the accelerated OpenFHE from UNIMAN
 WORKDIR /usr/src/app
