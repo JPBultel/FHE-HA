@@ -23,8 +23,8 @@ sudo systemctl restart docker
 ```
 ### 2. Clone & Build the Workflow:
 ```
-git clone git@github.com:JPBultel/FHE-HA.git
-cd FHE-HA/BDT/
+git clone git@github.com:JPBultel/FHE-HA.git &&\
+cd FHE-HA/BDT/ &&\
 docker build -t heha .
 ```
 
@@ -35,7 +35,7 @@ sudo docker run --gpus all -it --name heha heha
 ```
 3.2 Construct a binary decision tree and input data, generate keys, encrypt:
 ```
-cd BDTClient/build
+cd BDTClient/build &&\
 ./bdt_client_prefinal
 ```
 3.3 Share the keys and the data:
@@ -50,7 +50,7 @@ cp ./demoData/key-private.txt ../../BDTResult/build/demoData/key-private.txt
 
 3.4 Run the application (blind evaluation of the binary decision tree with FHE):
 ```
-cd ../../BDTServer/build/
+cd ../../BDTServer/build/ &&\
 ./bdt-hom-eval 3
 ```
 3.5 Share the encrypted result:
@@ -59,7 +59,7 @@ cp ./demoData/output_ciphertext.txt ../../BDTResult/build/demoData/output_cipher
 ```
 3.6 Decrypt the result:
 ```
-cd ../../BDTResult/build/
+cd ../../BDTResult/build/ &&\
 ./bdt_result_prefinal
 ```
 
