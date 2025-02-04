@@ -1,6 +1,9 @@
 # Base image
 FROM nvidia/cuda:12.2.0-devel-ubuntu20.04
 
+# Set terminal to non-interactive
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
